@@ -64,6 +64,7 @@ export default function AdminProducts() {
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
+  const [pendingDelete, setPendingDelete] = useState(null);
 
   useEffect(() => {
     let alive = true;
@@ -174,7 +175,7 @@ export default function AdminProducts() {
   }
 
   async function remove(product) {
-    if (!window.confirm(t('admin.deleteConfirm'))) return;
+    setPendingDelete(null);
     try {
       await api(`/api/admin/products/${product.id}`, { method: 'DELETE' });
       setToast(t('admin.deleted'));
@@ -277,7 +278,7 @@ export default function AdminProducts() {
                       <button
                         type="button"
                         className="btn btn-danger btn-sm"
-                        onClick={() => remove(product)}
+                        onClick={() => setPendingDelete(product)}
                         data-testid={`delete-${product.id}`}
                       >
                         {t('common.delete')}
@@ -468,6 +469,48 @@ export default function AdminProducts() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      ) : null}
+
+      {pendingDelete ? (
+        <div className="modal-backdrop" role="presentation">
+          <div className="modal card" role="dialog" aria-modal="true" aria-label={t('common.delete')}>
+            <div className="modal-head">
+              <h2>{t('common.delete')}</h2>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => setPendingDelete(null)}
+                data-testid="close-delete"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>{t('admin.deleteConfirm')}</p>
+              <p className="muted small">
+                {lang === 'ar' ? pendingDelete.name?.ar : pendingDelete.name?.fr} · {pendingDelete.brand}
+              </p>
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => setPendingDelete(null)}
+                  data-testid="cancel-delete"
+                >
+                  {t('common.cancel')}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => remove(pendingDelete)}
+                  data-testid="confirm-delete"
+                >
+                  {t('common.delete')}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       ) : null}
