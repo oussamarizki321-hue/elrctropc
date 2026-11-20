@@ -26,7 +26,7 @@ export const seedProducts = [
     rating: 4.8,
     reviews: 126,
     featured: true,
-    image: '/img/products/cat-laptop.webp',
+    image: '/img/products/p1-asus-rog-strix-g16.webp',
     name: { ar: 'لابتوب ASUS ROG Strix G16 للألعاب', fr: 'PC portable gaming ASUS ROG Strix G16' },
     desc: {
       ar: 'لابتوب ألعاب قوي بشاشة 16 بوصة 165Hz ومعالج Intel Core i7 وكرت RTX 4060، مثالي للألعاب والتصميم.',
@@ -47,7 +47,7 @@ export const seedProducts = [
     rating: 4.5,
     reviews: 89,
     featured: false,
-    image: '/img/products/cat-laptop.webp',
+    image: '/img/products/p2-lenovo-ideapad-slim-5.webp',
     name: { ar: 'لابتوب Lenovo IdeaPad Slim 5 للعمل', fr: 'PC portable Lenovo IdeaPad Slim 5' },
     desc: {
       ar: 'لابتوب خفيف للعمل والدراسة بمعالج Ryzen 5 وذاكرة 16GB وبطارية تدوم طويلاً.',
@@ -69,7 +69,7 @@ export const seedProducts = [
     rating: 4.9,
     reviews: 214,
     featured: true,
-    image: '/img/products/cat-gpu.webp',
+    image: '/img/products/p3-rtx-4070-super.webp',
     name: { ar: 'كرت شاشة NVIDIA GeForce RTX 4070 Super 12GB', fr: 'Carte graphique NVIDIA GeForce RTX 4070 Super 12 Go' },
     desc: {
       ar: 'أداء ممتاز للألعاب بدقة 1440p مع تقنية DLSS 3 وذاكرة GDDR6X بسعة 12GB.',
@@ -90,7 +90,7 @@ export const seedProducts = [
     rating: 4.6,
     reviews: 97,
     featured: false,
-    image: '/img/products/cat-gpu.webp',
+    image: '/img/products/p4-rx-7800-xt.webp',
     name: { ar: 'كرت شاشة AMD Radeon RX 7800 XT 16GB', fr: 'Carte graphique AMD Radeon RX 7800 XT 16 Go' },
     desc: {
       ar: 'كرت شاشة بذاكرة 16GB مناسب للألعاب بدقة 1440p والعمل الإبداعي.',
@@ -111,7 +111,7 @@ export const seedProducts = [
     rating: 4.7,
     reviews: 143,
     featured: true,
-    image: '/img/products/cat-cpu.webp',
+    image: '/img/products/p5-core-i7-14700k.webp',
     name: { ar: 'معالج Intel Core i7-14700K', fr: 'Processeur Intel Core i7-14700K' },
     desc: {
       ar: 'معالج بـ 20 نواة و28 خيطاً بترددات عالية، ممتاز للألعاب والإنتاجية.',
@@ -132,7 +132,7 @@ export const seedProducts = [
     rating: 4.9,
     reviews: 312,
     featured: true,
-    image: '/img/products/cat-cpu.webp',
+    image: '/img/products/p6-ryzen-7-7800x3d.webp',
     name: { ar: 'معالج AMD Ryzen 7 7800X3D', fr: 'Processeur AMD Ryzen 7 7800X3D' },
     desc: {
       ar: 'أفضل معالج للألعاب بفضل تقنية 3D V-Cache و8 أنوية.',
@@ -154,7 +154,7 @@ export const seedProducts = [
     rating: 4.7,
     reviews: 76,
     featured: false,
-    image: '/img/products/cat-ram.webp',
+    image: '/img/products/p7-corsair-ddr5-32gb.webp',
     name: { ar: 'ذاكرة Corsair Vengeance DDR5 32GB 6000MHz', fr: 'Mémoire Corsair Vengeance DDR5 32 Go 6000 MHz' },
     desc: {
       ar: 'طقم ذاكرة DDR5 بسعة 32GB (2x16GB) بتردد 6000MHz مع إضاءة RGB.',
@@ -175,7 +175,7 @@ export const seedProducts = [
     rating: 4.4,
     reviews: 58,
     featured: false,
-    image: '/img/products/cat-ram.webp',
+    image: '/img/products/p8-kingston-fury-ddr4.webp',
     name: { ar: 'ذاكرة Kingston Fury Beast DDR4 16GB', fr: 'Mémoire Kingston Fury Beast DDR4 16 Go' },
     desc: {
       ar: 'ذاكرة DDR4 بسعة 16GB بتردد 3200MHz، توافق واسع مع اللوحات الحديثة.',
@@ -196,7 +196,7 @@ export const seedProducts = [
     rating: 4.9,
     reviews: 168,
     featured: true,
-    image: '/img/products/cat-storage.webp',
+    image: '/img/products/p9-samsung-990-pro-2tb.webp',
     name: { ar: 'قرص SSD Samsung 990 Pro NVMe 2TB', fr: 'SSD Samsung 990 Pro NVMe 2 To' },
     desc: {
       ar: 'قرص NVMe فائق السرعة يصل إلى 7450MB/s، مثالي للألعاب والتحرير.',
@@ -217,7 +217,7 @@ export const seedProducts = [
     rating: 4.6,
     reviews: 91,
     featured: false,
-    image: '/img/products/cat-storage.webp',
+    image: '/img/products/p10-wd-blue-sn580-1tb.webp',
     name: { ar: 'قرص SSD WD Blue SN580 NVMe 1TB', fr: 'SSD WD Blue SN580 NVMe 1 To' },
     desc: {
       ar: 'قرص NVMe اقتصادي بسعة 1TB وسرعة 4150MB/s للاستخدام اليومي.',
@@ -239,7 +239,7 @@ export const seedProducts = [
     rating: 4.7,
     reviews: 132,
     featured: true,
-    image: '/img/products/cat-monitor.webp',
+    image: '/img/products/p11-samsung-odyssey-g5-27.webp',
     name: { ar: 'شاشة Samsung Odyssey G5 27 بوصة 165Hz', fr: 'Écran Samsung Odyssey G5 27" 165 Hz' },
     desc: {
       ar: 'شاشة منحنية للألعاب بدقة QHD ومعدل تحديث 165Hz وزمن استجابة 1ms.',
@@ -260,7 +260,7 @@ export const seedProducts = [
     rating: 4.5,
     reviews: 64,
     featured: false,
-    image: '/img/products/cat-monitor.webp',
+    image: '/img/products/p12-lg-ultragear-24.webp',
     name: { ar: 'شاشة LG UltraGear 24 بوصة 144Hz', fr: 'Écran LG UltraGear 24" 144 Hz' },
     desc: {
       ar: 'شاشة ألعاب بدقة Full HD ومعدل تحديث 144Hz مع دعم FreeSync.',
@@ -281,7 +281,7 @@ export const seedProducts = [
     rating: 4.8,
     reviews: 87,
     featured: false,
-    image: '/img/products/cat-keyboard.webp',
+    image: '/img/products/p13-keychron-k8-pro.webp',
     name: { ar: 'لوحة مفاتيح Keychron K8 Pro لاسلكية', fr: 'Clavier Keychron K8 Pro sans fil' },
     desc: {
       ar: 'لوحة مفاتيح ميكانيكية 75% لاسلكية مع مفاتيح قابلة للتبديل ودعم عربي.',
@@ -302,7 +302,7 @@ export const seedProducts = [
     rating: 4.9,
     reviews: 205,
     featured: true,
-    image: '/img/products/cat-mouse.webp',
+    image: '/img/products/p14-logitech-gpro-x-superlight.webp',
     name: { ar: 'فأرة Logitech G Pro X Superlight', fr: 'Souris Logitech G Pro X Superlight' },
     desc: {
       ar: 'فأرة ألعاب لاسلكية خفيفة جداً بوزن 63 غراماً ومستشعر HERO 25K.',
@@ -324,7 +324,7 @@ export const seedProducts = [
     rating: 4.6,
     reviews: 74,
     featured: false,
-    image: '/img/products/cat-headset.webp',
+    image: '/img/products/p15-hyperx-cloud-3.webp',
     name: { ar: 'سماعة HyperX Cloud III للألعاب', fr: 'Casque HyperX Cloud III gaming' },
     desc: {
       ar: 'سماعة ألعاب بميكروفون عازل للضوضاء وصوت محيطي مريح للاستخدام الطويل.',
@@ -345,7 +345,7 @@ export const seedProducts = [
     rating: 4.7,
     reviews: 52,
     featured: false,
-    image: '/img/products/cat-psu.webp',
+    image: '/img/products/p16-corsair-rm850e.webp',
     name: { ar: 'مزود طاقة Corsair RM850e 850W Gold', fr: 'Alimentation Corsair RM850e 850 W Gold' },
     desc: {
       ar: 'مزود طاقة معياري كامل بقدرة 850W وشهادة 80+ Gold ومروحة صامتة.',
@@ -367,7 +367,7 @@ export const seedProducts = [
     rating: 4.5,
     reviews: 61,
     featured: false,
-    image: '/img/products/cat-keyboard.webp',
+    image: '/img/products/p17-logitech-k380.webp',
     name: { ar: 'لوحة مفاتيح Logitech K380 لاسلكية', fr: 'Clavier Logitech K380 sans fil' },
     desc: {
       ar: 'لوحة مفاتيح لاسلكية مدمجة يمكن ربطها بثلاثة أجهزة في نفس الوقت، مثالية للمكتب والتنقل.',
@@ -388,7 +388,7 @@ export const seedProducts = [
     rating: 4.4,
     reviews: 38,
     featured: false,
-    image: '/img/products/cat-keyboard.webp',
+    image: '/img/products/p18-redragon-k552.webp',
     name: { ar: 'لوحة مفاتيح Redragon K552 ميكانيكية RGB', fr: 'Clavier mécanique Redragon K552 RGB' },
     desc: {
       ar: 'لوحة مفاتيح ميكانيكية بإضاءة RGB ومفاتيح حمراء سريعة الاستجابة وهيكل معدني متين.',
@@ -410,7 +410,7 @@ export const seedProducts = [
     rating: 4.7,
     reviews: 92,
     featured: true,
-    image: '/img/products/cat-mouse.webp',
+    image: '/img/products/p19-razer-deathadder-v3.webp',
     name: { ar: 'فأرة Razer DeathAdder V3 للألعاب', fr: 'Souris gaming Razer DeathAdder V3' },
     desc: {
       ar: 'فأرة ألعاب خفيفة بمستشعر بصري عالي الدقة وتصميم مريح لليد اليمنى.',
@@ -431,7 +431,7 @@ export const seedProducts = [
     rating: 4.2,
     reviews: 44,
     featured: false,
-    image: '/img/products/cat-mouse.webp',
+    image: '/img/products/p20-logitech-m170.webp',
     name: { ar: 'فأرة Logitech M170 لاسلكية', fr: 'Souris sans fil Logitech M170' },
     desc: {
       ar: 'فأرة لاسلكية بسيطة وموثوقة للمكتب مع بطارية تدوم حتى 12 شهرًا.',
@@ -453,7 +453,7 @@ export const seedProducts = [
     rating: 4.6,
     reviews: 57,
     featured: false,
-    image: '/img/products/cat-headset.webp',
+    image: '/img/products/p21-steelseries-arctis-nova-1.webp',
     name: { ar: 'سماعة SteelSeries Arctis Nova 1', fr: 'Casque SteelSeries Arctis Nova 1' },
     desc: {
       ar: 'سماعة خفيفة بصوت نقي وميكروفون قابل للسحب، متوافقة مع جميع المنصات.',
@@ -474,7 +474,7 @@ export const seedProducts = [
     rating: 4.3,
     reviews: 35,
     featured: false,
-    image: '/img/products/cat-headset.webp',
+    image: '/img/products/p22-jbl-quantum-100.webp',
     name: { ar: 'سماعة JBL Quantum 100 سلكية', fr: 'Casque filaire JBL Quantum 100' },
     desc: {
       ar: 'سماعة سلكية اقتصادية بصوت محيطي وميكروفون قابل للفصل للاجتماعات والألعاب.',
@@ -495,7 +495,7 @@ export const seedProducts = [
     rating: 4.5,
     reviews: 40,
     featured: false,
-    image: '/img/products/cat-psu.webp',
+    image: '/img/products/p23-coolermaster-mwe-650.webp',
     name: { ar: 'مزود طاقة Cooler Master MWE 650W Bronze', fr: 'Alimentation Cooler Master MWE 650 W Bronze' },
     desc: {
       ar: 'مزود طاقة موثوق بقدرة 650W وشهادة 80+ Bronze مناسب للتجميعات المتوسطة.',
@@ -517,7 +517,7 @@ export const seedProducts = [
     rating: 4.8,
     reviews: 28,
     featured: true,
-    image: '/img/products/cat-psu.webp',
+    image: '/img/products/p24-be-quiet-pure-power-12m.webp',
     name: { ar: 'مزود طاقة be quiet! Pure Power 12 M 750W', fr: 'Alimentation be quiet! Pure Power 12 M 750 W' },
     desc: {
       ar: 'مزود طاقة صامت جدًا بشهادة 80+ Gold ودعم ATX 3.0 لكرات الشاشة الحديثة.',
