@@ -228,7 +228,7 @@ test('order is priced from the server catalog, ignoring client prices', async ()
   assert.equal(order.items[0].price, product.price, 'server price must win over client price');
   const subtotal = product.price * 2;
   assert.equal(order.subtotal, subtotal);
-  const expectedShipping = subtotal >= 50000 ? 0 : 800;
+  const expectedShipping = subtotal >= 3000 ? 0 : 40;
   assert.equal(order.shipping, expectedShipping);
   assert.equal(order.total, subtotal + expectedShipping);
   assert.equal(order.status, 'new');
@@ -452,5 +452,5 @@ test('SPA fallback serves index.html for client routes', async () => {
 test('static assets are served', async () => {
   const res = await fetch(`${BASE}/img/products/cat-cpu.webp`);
   assert.equal(res.status, 200);
-  assert.match(res.headers.get('content-type') || '', /svg/);
+  assert.match(res.headers.get('content-type') || '', /webp/);
 });
