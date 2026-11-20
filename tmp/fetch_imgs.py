@@ -21,12 +21,12 @@ USED = set()
 BAD = re.compile(
     r"logo|icon\b|diagram|chart|schematic|map\b|screenshot|benchmark|review|"
     r"im vergleich|geekerwan|极客湾|teardown|disassembl|advertis|packaging|"
-    r"comparison|\bvs\b|test result|performance|score|graph\b", re.I)
+    r"comparison|\bvs\b|test result|performance|score|graph\b|feed|displays|showing", re.I)
 
 # slug, search terms, fallback terms, required title pattern
 PRODUCTS = [
     ("p1-asus-rog-strix-g16", "ASUS ROG Strix laptop", "ROG gaming notebook", r"rog|strix|gaming laptop|notebook"),
-    ("p2-lenovo-ideapad-slim-5", "Lenovo IdeaPad laptop", "Lenovo notebook", r"ideapad|lenovo.*(laptop|notebook)|laptop|notebook"),
+    ("p2-lenovo-ideapad-slim-5", "Lenovo IdeaPad 5 laptop", "Lenovo IdeaPad notebook", r"ideapad|lenovo.*(laptop|notebook)"),
     ("p3-rtx-4070-super", "GeForce RTX 4070 graphics card", "Nvidia GeForce RTX 40", r"4070|geforce|rtx"),
     ("p4-rx-7800-xt", "Radeon RX 7800 XT", "AMD Radeon RX 7000", r"7800|radeon|rx ?7"),
     ("p5-core-i7-14700k", "Intel Core i7-14700K CPU", "Intel Core i7 LGA 1700", r"14700|core i7|intel core"),
@@ -34,9 +34,9 @@ PRODUCTS = [
     ("p7-corsair-ddr5-32gb", "Corsair Vengeance DDR5", "DDR5 memory module", r"ddr5|corsair|vengeance"),
     ("p8-kingston-fury-ddr4", "Kingston Fury DDR4", "DDR4 memory module", r"ddr4|kingston|fury"),
     ("p9-samsung-990-pro-2tb", "Samsung 990 Pro SSD", "Samsung NVMe SSD", r"990|samsung.*(ssd|nvme)|nvme"),
-    ("p10-wd-blue-sn580-1tb", "Western Digital WD Blue SSD", "M.2 NVMe SSD", r"sn580|wd blue|western digital|nvme"),
-    ("p11-samsung-odyssey-g5-27", "Samsung Odyssey gaming monitor", "Samsung monitor", r"odyssey|samsung.*monitor|monitor"),
-    ("p12-lg-ultragear-24", "LG UltraGear monitor", "LG computer monitor", r"ultragear|lg.*(monitor|display)|monitor"),
+    ("p10-wd-blue-sn580-1tb", "Western Digital WD Blue SN580 SSD", "WD Blue SSD M.2", r"wd blue|western digital|sn5\d0"),
+    ("p11-samsung-odyssey-g5-27", "Samsung Odyssey G7 gaming monitor", "Samsung Odyssey monitor", r"odyssey"),
+    ("p12-lg-ultragear-24", "LG UltraGear gaming monitor", "LG UltraGear", r"ultragear"),
     ("p13-keychron-k8-pro", "Keychron K8 keyboard", "Keychron mechanical keyboard", r"keychron"),
     ("p14-logitech-gpro-x-superlight", "Logitech G Pro Superlight mouse", "Logitech G Pro mouse", r"logitech|superlight|g pro"),
     ("p15-hyperx-cloud-3", "HyperX Cloud headset", "HyperX gaming headset", r"hyperx|cloud"),
