@@ -53,10 +53,18 @@ PRODUCTS = [
 
 
 def api(params):
+    import time
     url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.load(r)
+    last = None
+    for attempt in range(4):
+        try:
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return json.load(r)
+        except Exception as e:
+            last = e
+            time.sleep(4 + attempt * 6)
+    raise last
 
 
 def search(terms, limit=12):
@@ -157,7 +165,7 @@ if __name__ == "__main__":
     limit = int(sys.argv[2]) if len(sys.argv) > 2 else len(PRODUCTS)
     batch = PRODUCTS[offset:offset + limit]
     results = {}
-    with ThreadPoolExecutor(max_workers=4) as ex:
+    with ThreadPoolExecutor(max_workers=2) as ex:
         for slug, res in ex.map(lambda a: build(*a), batch):
             results[slug] = res
     manifest = "/tmp/imgwork/manifest.json"
