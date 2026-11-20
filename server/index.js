@@ -136,7 +136,13 @@ function computeTotals(items) {
 
 // ---- public API -----------------------------------------------------------
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', products: db.products.length, orders: db.orders.length, uptime: Math.round(process.uptime()) });
+  res.json({
+    ok: true,
+    status: 'ok',
+    products: db.products.length,
+    orders: db.orders.length,
+    uptime: Math.round(process.uptime()),
+  });
 });
 
 app.get('/api/config', (req, res) => {
