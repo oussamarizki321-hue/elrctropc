@@ -22,9 +22,7 @@ export default function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark" aria-hidden="true">
-            ⚡
-          </span>
+          <img src="/img/logo.svg" alt="" className="brand-mark" width="40" height="40" aria-hidden="true" />
           <span className="brand-text">
             <strong>ElectroPC</strong>
             <small>{t('brand.tagline')}</small>

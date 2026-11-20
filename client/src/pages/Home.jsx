@@ -44,7 +44,7 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-art" aria-hidden="true">
-            <img src="/img/hero.svg" alt="" width="420" height="320" />
+            <img src="/img/hero-pc.webp" alt="" width="820" height="615" loading="eager" decoding="async" />
           </div>
         </div>
       </section>

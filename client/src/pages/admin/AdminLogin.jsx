@@ -51,9 +51,7 @@ export default function AdminLogin() {
       <div className="login-card card">
         <div className="login-top">
           <Link to="/" className="brand">
-            <span className="brand-mark" aria-hidden="true">
-              ⚡
-            </span>
+            <img src="/img/logo.svg" alt="" className="brand-mark" width="40" height="40" aria-hidden="true" />
             <strong>ElectroPC</strong>
           </Link>
           <button type="button" className="btn btn-ghost btn-sm" onClick={toggleLang}>

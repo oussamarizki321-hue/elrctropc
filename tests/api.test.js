@@ -330,7 +330,7 @@ test('admin can create a product', async () => {
     brand: 'QATest',
     price: 12345,
     stock: 7,
-    image: '/img/ram.svg',
+    image: '/img/products/cat-ram.webp',
     sku: 'QA-TEST-1',
     featured: false,
   };
@@ -357,7 +357,7 @@ test('admin product creation validates required fields', async () => {
 test('admin product creation rejects a bad category and negative price', async () => {
   const { status, body } = await api(
     '/api/admin/products',
-    admin(json({ name: { ar: 'ا', fr: 'A' }, category: 'not-real', brand: 'X', price: -5, stock: 1, image: '/img/cpu.svg' }))
+    admin(json({ name: { ar: 'ا', fr: 'A' }, category: 'not-real', brand: 'X', price: -5, stock: 1, image: '/img/products/cat-cpu.webp' }))
   );
   assert.equal(status, 400);
   assert.equal(body.fields.category, 'invalid');

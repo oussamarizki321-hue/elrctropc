@@ -52,9 +52,7 @@ export default function AdminLayout() {
       <header className="admin-header">
         <div className="container admin-header-inner">
           <Link to="/" className="brand">
-            <span className="brand-mark" aria-hidden="true">
-              ⚡
-            </span>
+            <img src="/img/logo.svg" alt="" className="brand-mark" width="40" height="40" aria-hidden="true" />
             <strong>ElectroPC</strong>
           </Link>
           <nav className="admin-tabs" aria-label={t('admin.dashboard')}>
