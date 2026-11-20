@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Curate one matching photo per product from Wikimedia Commons (strict).
+"""Curate one matching product photo per product from Wikimedia Commons.
 
-Rules: JPEG photos only, title must match a product keyword group,
-review/benchmark graphics rejected, no duplicate titles across products.
-Scores candidates by border brightness/uniformity (studio-style shots).
-Existing outputs are skipped so reruns resume.
+Each product has an ordered query chain and a deny-list of competing brands /
+unrelated subjects, so a "Logitech mouse" never resolves to a Jeep or a phone.
+Photos are scored for clean borders (studio-style), cropped to 4:3 and saved
+as webp. Existing outputs are skipped, so reruns resume where they stopped.
 """
-import json, os, re, subprocess, sys, threading, urllib.parse, urllib.request
+import json, os, re, subprocess, sys, threading, time, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
 OUT = "/workspace/elrctropc/client/public/img/products"
@@ -21,39 +21,65 @@ USED = set()
 BAD = re.compile(
     r"logo|icon\b|diagram|chart|schematic|map\b|screenshot|benchmark|review|"
     r"im vergleich|geekerwan|极客湾|teardown|disassembl|advertis|packaging|"
-    r"comparison|\bvs\b|test result|performance|score|graph\b|feed|displays|showing", re.I)
+    r"comparison|\bvs\b|test result|performance|score|graph\b|feed|showing", re.I)
 
-# slug, search terms, fallback terms, required title pattern
+GLOBAL_DENY = re.compile(
+    r"jeep|ambulance|truck|\bcar\b|vehicle|motorcycle|phone|smartphone|optimus|"
+    r"tablet|watch|printer|keyboard layout|motherboard|water ?block|fan\b", re.I)
+
 PRODUCTS = [
-    ("p1-asus-rog-strix-g16", "ASUS ROG Strix laptop", "ROG gaming notebook", r"rog|strix|gaming laptop|notebook"),
-    ("p2-lenovo-ideapad-slim-5", "Lenovo IdeaPad 5 laptop", "Lenovo IdeaPad notebook", r"ideapad|lenovo.*(laptop|notebook)"),
-    ("p3-rtx-4070-super", "GeForce RTX 4070 graphics card", "Nvidia GeForce RTX 40", r"4070|geforce|rtx"),
-    ("p4-rx-7800-xt", "Radeon RX 7800 XT", "AMD Radeon RX 7000", r"7800|radeon|rx ?7"),
-    ("p5-core-i7-14700k", "Intel Core i7-14700K CPU", "Intel Core i7 LGA 1700", r"14700|core i7|intel core"),
-    ("p6-ryzen-7-7800x3d", "AMD Ryzen 7 7800X3D", "AMD Ryzen AM5 processor", r"7800x3d|ryzen"),
-    ("p7-corsair-ddr5-32gb", "Corsair Vengeance DDR5", "DDR5 memory module", r"ddr5|corsair|vengeance"),
-    ("p8-kingston-fury-ddr4", "Kingston Fury DDR4", "DDR4 memory module", r"ddr4|kingston|fury"),
-    ("p9-samsung-990-pro-2tb", "Samsung 990 Pro SSD", "Samsung NVMe SSD", r"990|samsung.*(ssd|nvme)|nvme"),
-    ("p10-wd-blue-sn580-1tb", "Western Digital WD Blue SN580 SSD", "WD Blue SSD M.2", r"wd blue|western digital|sn5\d0"),
-    ("p11-samsung-odyssey-g5-27", "Samsung Odyssey G7 gaming monitor", "Samsung Odyssey monitor", r"odyssey"),
-    ("p12-lg-ultragear-24", "LG UltraGear gaming monitor", "LG UltraGear", r"ultragear"),
-    ("p13-keychron-k8-pro", "Keychron K8 keyboard", "Keychron mechanical keyboard", r"keychron"),
-    ("p14-logitech-gpro-x-superlight", "Logitech G Pro Superlight mouse", "Logitech G Pro mouse", r"logitech|superlight|g pro"),
-    ("p15-hyperx-cloud-3", "HyperX Cloud headset", "HyperX gaming headset", r"hyperx|cloud"),
-    ("p16-corsair-rm850e", "Corsair RM850 power supply", "Corsair power supply", r"corsair.*(rm|psu|power)|power supply"),
-    ("p17-logitech-k380", "Logitech K380 keyboard", "Logitech wireless keyboard", r"k380|logitech"),
-    ("p18-redragon-k552", "Redragon K552 keyboard", "Redragon mechanical keyboard", r"redragon|k552|mechanical keyboard"),
-    ("p19-razer-deathadder-v3", "Razer DeathAdder mouse", "Razer gaming mouse", r"razer|deathadder"),
-    ("p20-logitech-m170", "Logitech M170 wireless mouse", "wireless computer mouse", r"m170|logitech|wireless mouse"),
-    ("p21-steelseries-arctis-nova-1", "SteelSeries Arctis Nova headset", "SteelSeries Arctis", r"steelseries|arctis"),
-    ("p22-jbl-quantum-100", "JBL Quantum headset", "JBL gaming headset", r"jbl|quantum|headset"),
-    ("p23-coolermaster-mwe-650", "Cooler Master MWE power supply", "Cooler Master power supply", r"cooler master|mwe|power supply"),
-    ("p24-be-quiet-pure-power-12m", "be quiet Pure Power power supply", "be quiet power supply", r"be ?quiet|pure power|power supply"),
+    ("p1-asus-rog-strix-g16",
+     [("ASUS ROG Strix laptop", r"rog|strix"), ("ASUS ROG gaming notebook", r"rog|asus")], r""),
+    ("p2-lenovo-ideapad-slim-5",
+     [("Lenovo IdeaPad 5 laptop", r"ideapad|lenovo.*laptop"), ("Lenovo IdeaPad notebook", r"ideapad")], r"thinkpad"),
+    ("p3-rtx-4070-super",
+     [("GeForce RTX 4070 graphics card", r"4070|geforce"), ("Nvidia GeForce RTX 40 series card", r"geforce|nvidia")], r"radeon|amd"),
+    ("p4-rx-7800-xt",
+     [("Radeon RX 7800 XT graphics card", r"7800"), ("AMD Radeon RX 7000 graphics card", r"radeon")], r"geforce|nvidia"),
+    ("p5-core-i7-14700k",
+     [("Intel Core i7-14700K processor", r"14700"), ("Intel Core i7 LGA1700 processor", r"core i7")], r"ryzen|amd"),
+    ("p6-ryzen-7-7800x3d",
+     [("AMD Ryzen 7 7800X3D processor", r"7800x3d"), ("AMD Ryzen AM5 processor", r"ryzen")], r"intel|core i\d"),
+    ("p7-corsair-ddr5-32gb",
+     [("Corsair Vengeance DDR5 memory", r"vengeance|ddr5"), ("DDR5 memory module", r"ddr5")], r"kingston|samsung"),
+    ("p8-kingston-fury-ddr4",
+     [("Kingston Fury DDR4 memory", r"kingston|fury"), ("DDR4 memory module", r"ddr4")], r"corsair|samsung|hynix|g\.?skill|patriot|team ?group"),
+    ("p9-samsung-990-pro-2tb",
+     [("Samsung 990 Pro NVMe SSD", r"990"), ("Samsung NVMe SSD", r"samsung.*(ssd|nvme)|nvme")], r"wd blue|western digital|crucial|kingston"),
+    ("p10-wd-blue-sn580-1tb",
+     [("WD Blue SSD", r"wd blue|western digital"), ("M.2 NVMe SSD drive", r"nvme|ssd")], r"samsung|crucial|kingston"),
+    ("p11-samsung-odyssey-g5-27",
+     [("Samsung Odyssey gaming monitor", r"odyssey"), ("Samsung gaming monitor", r"samsung.*monitor")], r"lg|dell|acer|asus"),
+    ("p12-lg-ultragear-24",
+     [("LG UltraGear gaming monitor", r"ultragear"), ("LG computer monitor", r"lg.*(monitor|display)")], r"samsung|dell|acer|asus|benq"),
+    ("p13-keychron-k8-pro",
+     [("Keychron K8 mechanical keyboard", r"keychron"), ("Keychron keyboard", r"keychron")], r"logitech|razer"),
+    ("p14-logitech-gpro-x-superlight",
+     [("Logitech G Pro X Superlight mouse", r"superlight|g pro x"), ("Logitech G Pro wireless mouse", r"logitech.*(mouse|g pro)")], r"samsung|razer|steelseries|optimus|phone"),
+    ("p15-hyperx-cloud-3",
+     [("HyperX Cloud headset", r"hyperx"), ("HyperX gaming headset", r"hyperx")], r"steelseries|logitech|razer"),
+    ("p16-corsair-rm850e",
+     [("Corsair RM850 power supply", r"rm850|corsair"), ("Corsair power supply unit", r"corsair.*(power|psu)")], r"be ?quiet|cooler master"),
+    ("p17-logitech-k380",
+     [("Logitech K380 keyboard", r"k380"), ("Logitech wireless keyboard", r"logitech.*keyboard")], r"keychron|razer"),
+    ("p18-redragon-k552",
+     [("Redragon K552 keyboard", r"redragon"), ("Redragon mechanical keyboard", r"redragon")], r"logitech|razer|keychron"),
+    ("p19-razer-deathadder-v3",
+     [("Razer DeathAdder mouse", r"deathadder|razer"), ("Razer gaming mouse", r"razer")], r"logitech|steelseries"),
+    ("p20-logitech-m170",
+     [("Logitech M170 wireless mouse", r"m170"), ("Logitech wireless mouse", r"logitech.*mouse")], r"razer|steelseries|jeep|ambulance|car\b"),
+    ("p21-steelseries-arctis-nova-1",
+     [("SteelSeries Arctis Nova headset", r"arctis|steelseries"), ("SteelSeries Arctis headset", r"arctis")], r"hyperx|logitech|razer"),
+    ("p22-jbl-quantum-100",
+     [("JBL Quantum gaming headset", r"jbl.*quantum|quantum"), ("JBL gaming headset", r"jbl.*headset")], r"hyperx|steelseries"),
+    ("p23-coolermaster-mwe-650",
+     [("Cooler Master MWE power supply", r"cooler master|mwe"), ("Cooler Master power supply unit", r"cooler master")], r"corsair|be ?quiet"),
+    ("p24-be-quiet-pure-power-12m",
+     [("be quiet Pure Power power supply", r"be ?quiet"), ("be quiet power supply unit", r"be ?quiet")], r"corsair|cooler master"),
 ]
 
 
 def api(params):
-    import time
     url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
     last = None
     for attempt in range(4):
@@ -63,11 +89,11 @@ def api(params):
                 return json.load(r)
         except Exception as e:
             last = e
-            time.sleep(4 + attempt * 6)
+            time.sleep(5 + attempt * 6)
     raise last
 
 
-def search(terms, limit=12):
+def search(terms, limit=10):
     try:
         data = api({
             "action": "query", "format": "json", "generator": "search",
@@ -87,7 +113,7 @@ def search(terms, limit=12):
             continue
         if (info.get("width") or 0) < 900 or (info.get("height") or 0) < 600:
             continue
-        if BAD.search(title):
+        if BAD.search(title) or GLOBAL_DENY.search(title):
             continue
         url = info.get("thumburl") or info.get("url")
         if url:
@@ -120,44 +146,45 @@ def stats(path):
         return 0.5, 0.0
 
 
-def build(slug, terms, fallback, pattern):
+def build(slug, chain, deny_pattern):
     dest = os.path.join(OUT, slug + ".webp")
     if os.path.exists(dest) and os.path.getsize(dest) > 15000:
         return slug, "cached"
-    rx = re.compile(pattern, re.I)
-    cands = [c for c in search(terms) if rx.search(c["title"])]
-    if len(cands) < 3:
-        cands += [c for c in search(fallback) if rx.search(c["title"]) and c not in cands]
-    scored = []
-    for i, c in enumerate(cands[:6]):
-        with LOCK:
-            if c["title"] in USED:
+    deny = re.compile(deny_pattern, re.I) if deny_pattern else None
+    for query, pattern in chain:
+        rx = re.compile(pattern, re.I)
+        cands = [c for c in search(query)
+                 if rx.search(c["title"]) and not (deny and deny.search(c["title"]))]
+        scored = []
+        for i, c in enumerate(cands[:5]):
+            with LOCK:
+                if c["title"] in USED:
+                    continue
+            raw = os.path.join(TMP, f"{slug}-{i}.jpg")
+            try:
+                if not download(c["url"], raw):
+                    continue
+            except Exception:
                 continue
-        raw = os.path.join(TMP, f"{slug}-{i}.jpg")
-        try:
-            if not download(c["url"], raw):
-                continue
-        except Exception:
+            bright, unif = stats(raw)
+            scored.append((bright * 0.5 + unif * 0.5, raw, c["title"]))
+        if not scored:
             continue
-        bright, unif = stats(raw)
-        scored.append((bright * 0.5 + unif * 0.5, raw, c["title"]))
-    if not scored:
-        print("NO CANDIDATES", slug)
-        return slug, "none"
-    scored.sort(reverse=True, key=lambda x: x[0])
-    score, raw, title = scored[0]
-    with LOCK:
-        if title in USED:
-            print("dup", slug, title)
-            return slug, "dup"
-        USED.add(title)
-    subprocess.run(
-        ["convert", raw, "-auto-orient", "-resize", "1200x900^",
-         "-gravity", "center", "-extent", "1200x900",
-         "-strip", "-quality", "84", dest],
-        check=True, capture_output=True, timeout=45)
-    print(f"ok {slug} {score:.2f} {os.path.getsize(dest)//1024}KB <- {title}")
-    return slug, {"title": title, "score": round(score, 3)}
+        scored.sort(reverse=True, key=lambda x: x[0])
+        score, raw, title = scored[0]
+        with LOCK:
+            if title in USED:
+                continue
+            USED.add(title)
+        subprocess.run(
+            ["convert", raw, "-auto-orient", "-resize", "1200x900^",
+             "-gravity", "center", "-extent", "1200x900",
+             "-strip", "-quality", "84", dest],
+            check=True, capture_output=True, timeout=45)
+        print(f"ok {slug} {score:.2f} {os.path.getsize(dest)//1024}KB <- {title}")
+        return slug, {"title": title, "score": round(score, 3)}
+    print("NO CANDIDATES", slug)
+    return slug, "none"
 
 
 if __name__ == "__main__":

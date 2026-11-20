@@ -1,24 +1,34 @@
 /* ElectroPC — single stylesheet. Logical properties keep RTL/LTR correct. */
 
 :root {
-  --bg: #f4f6fb;
+  --bg: #f6f7fc;
+  --bg-deep: #eef0fa;
   --surface: #ffffff;
-  --ink: #0f172a;
-  --muted: #5c6b82;
-  --line: #e3e8f0;
-  --primary: #1d4ed8;
-  --primary-dark: #1e3a8a;
-  --primary-soft: #e5ebff;
-  --danger: #d92d20;
-  --danger-soft: #fdecea;
-  --success: #12805c;
-  --success-soft: #e6f6f0;
-  --warn: #a15c07;
-  --warn-soft: #fdf3e2;
-  --radius: 16px;
-  --radius-sm: 10px;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-  --shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 12px 28px rgba(15, 23, 42, 0.07);
+  --surface-2: #fbfbff;
+  --ink: #0a0f1f;
+  --ink-2: #1b2338;
+  --muted: #667085;
+  --line: #e7e9f4;
+  --line-strong: #d5d9ea;
+  --primary: #5b3df5;
+  --primary-dark: #3f22c9;
+  --primary-soft: #eeebff;
+  --accent: #00b8ad;
+  --accent-soft: #dcfaf7;
+  --violet: #a855f7;
+  --danger: #e11d48;
+  --danger-soft: #ffe6ec;
+  --success: #0f9d70;
+  --success-soft: #e2f9f0;
+  --warn: #b45309;
+  --warn-soft: #fdf1e0;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow-sm: 0 1px 2px rgba(10, 15, 31, 0.05);
+  --shadow: 0 4px 10px rgba(10, 15, 31, 0.04), 0 20px 44px rgba(63, 34, 201, 0.1);
+  --grad-brand: linear-gradient(135deg, #5b3df5 0%, #a855f7 55%, #00b8ad 100%);
+  --grad-cta: linear-gradient(135deg, #6a4bff 0%, #5b3df5 45%, #9333ea 100%);
+  --grad-media: linear-gradient(160deg, #fbfbff 0%, #f1f2fd 55%, #e9ebfa 100%);
   --maxw: 1200px;
   --header-h: 68px;
 }
