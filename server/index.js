@@ -25,8 +25,8 @@ const SECRET =
   process.env.SESSION_SECRET ||
   crypto.createHash('sha256').update(`electropc-token:${ADMIN_PASSWORD}`).digest('hex');
 const TOKEN_TTL_MS = 8 * 60 * 60 * 1000;
-const SHIPPING_FEE = 800;
-const FREE_SHIPPING_FROM = 50000;
+const SHIPPING_FEE = 40;
+const FREE_SHIPPING_FROM = 3000;
 const CATEGORY_IDS = new Set(categories.map((c) => c.id));
 const ORDER_STATUSES = ['new', 'confirmed', 'shipped', 'delivered', 'cancelled'];
 
@@ -147,7 +147,7 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/config', (req, res) => {
   res.json({
-    currency: 'DZD',
+    currency: 'MAD',
     shippingFee: SHIPPING_FEE,
     freeShippingFrom: FREE_SHIPPING_FROM,
     categories: categories.map(({ id, ar, fr, image }) => ({ id, ar, fr, image })),

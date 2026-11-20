@@ -28,9 +28,9 @@ function readStoredItems() {
 export function CartProvider({ children }) {
   const [items, setItems] = useState(readStoredItems);
   const [config, setConfig] = useState({
-    shippingFee: 800,
-    freeShippingFrom: 50000,
-    currency: 'DZD',
+    shippingFee: 40,
+    freeShippingFrom: 3000,
+    currency: 'MAD',
     categories: [],
   });
 

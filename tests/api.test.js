@@ -87,7 +87,7 @@ test('config exposes shipping rules and categories', async () => {
   assert.equal(typeof body.shippingFee, 'number');
   assert.equal(typeof body.freeShippingFrom, 'number');
   assert.ok(Array.isArray(body.categories) && body.categories.length >= 10);
-  assert.equal(body.currency, 'DZD');
+  assert.equal(body.currency, 'MAD');
 });
 
 test('security headers are set', async () => {

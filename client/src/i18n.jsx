@@ -28,14 +28,14 @@ const dict = {
     'common.of': 'من',
 
     'home.heroTitle': 'كل قطع الكمبيوتر التي تحتاجها في مكان واحد',
-    'home.heroSubtitle': 'أحدث المعالجات وكرت الشاشة واللابتوبات بأسعار تنافسية، مع توصيل إلى كل الولايات.',
+    'home.heroSubtitle': 'Processeurs, cartes graphiques et portables au meilleur prix, livrés dans toutes les villes du Maroc.',
     'home.shopNow': 'تسوّق الآن',
     'home.browseCategories': 'تصفّح الأقسام',
     'home.featured': 'منتجات مميّزة',
     'home.viewAll': 'عرض كل المنتجات',
     'home.categories': 'الأقسام',
     'home.perkShipping': 'توصيل سريع',
-    'home.perkShippingText': 'توصيل مجاني للطلبات فوق 50.000 دج',
+    'home.perkShippingText': 'Livraison gratuite dès 3 000 DH',
     'home.perkWarranty': 'ضمان رسمي',
     'home.perkWarrantyText': 'ضمان على جميع المنتجات',
     'home.perkCod': 'الدفع عند الاستلام',
@@ -99,14 +99,14 @@ const dict = {
     'cart.checkout': 'إتمام الطلب',
     'cart.clear': 'إفراغ السلة',
     'cart.summary': 'ملخّص الطلب',
-    'cart.freeHint': 'أضف {n} دج للحصول على توصيل مجاني',
+    'cart.freeHint': 'Ajoutez {n} DH pour la livraison gratuite',
     'cart.products': 'المنتجات',
 
     'checkout.title': 'إتمام الطلب',
     'checkout.contact': 'معلومات التوصيل',
     'checkout.name': 'الاسم الكامل',
     'checkout.phone': 'رقم الهاتف',
-    'checkout.wilaya': 'الولاية',
+    'checkout.wilaya': 'Ville / Région',
     'checkout.address': 'العنوان',
     'checkout.email': 'البريد الإلكتروني',
     'checkout.notes': 'ملاحظات',
@@ -117,10 +117,10 @@ const dict = {
     'checkout.submitting': 'جارٍ إرسال الطلب...',
     'checkout.summary': 'ملخّص الطلب',
     'checkout.items': 'المنتجات',
-    'checkout.selectWilaya': 'اختر الولاية',
+    'checkout.selectWilaya': 'Choisir la ville',
     'checkout.errName': 'الاسم يجب أن يحتوي على حرفين على الأقل',
     'checkout.errPhone': 'رقم هاتف غير صالح',
-    'checkout.errWilaya': 'اختر الولاية',
+    'checkout.errWilaya': 'Choisissez la ville',
     'checkout.errAddress': 'العنوان قصير جداً',
     'checkout.errEmail': 'بريد إلكتروني غير صالح',
     'checkout.errItems': 'السلة فارغة أو تحتوي على منتجات غير صالحة',
@@ -169,7 +169,7 @@ const dict = {
     'admin.nameFr': 'الاسم بالفرنسية',
     'admin.category': 'القسم',
     'admin.brand': 'العلامة التجارية',
-    'admin.price': 'السعر (دج)',
+    'admin.price': 'Prix (DH)',
     'admin.oldPrice': 'السعر القديم',
     'admin.stock': 'المخزون',
     'admin.image': 'رابط الصورة',
@@ -200,7 +200,7 @@ const dict = {
     'admin.noProducts': 'لا توجد منتجات',
     'admin.orderDate': 'التاريخ',
     'admin.phone': 'الهاتف',
-    'admin.wilaya': 'الولاية',
+    'admin.wilaya': 'Ville / Région',
     'admin.address': 'العنوان',
     'admin.changeStatus': 'تغيير الحالة',
     'admin.statusUpdated': 'تم تحديث حالة الطلب',
@@ -214,7 +214,7 @@ const dict = {
     'notfound.cta': 'العودة إلى الرئيسية',
 
     'footer.about': 'عن ElectroPC',
-    'footer.aboutText': 'متجر متخصص في قطع الكمبيوتر والإلكترونيات مع ضمان رسمي وتوصيل لكل الولايات.',
+    'footer.aboutText': 'Boutique spécialisée en composants PC, garantie officielle et livraison dans toutes les villes du Maroc.',
     'footer.shop': 'التسوق',
     'footer.help': 'المساعدة',
     'footer.contact': 'اتصل بنا',
@@ -485,8 +485,8 @@ export function I18nProvider({ children }) {
   const formatPrice = useCallback(
     (amount) => {
       const num = Number(amount) || 0;
-      const formatted = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(num);
-      return `${formatted} ${lang === 'ar' ? 'دج' : 'DA'}`;
+      const formatted = new Intl.NumberFormat('fr-MA', { maximumFractionDigits: 0 }).format(num);
+      return `${formatted} ${lang === 'ar' ? 'د.م.' : 'DH'}`;
     },
     [lang]
   );
@@ -494,7 +494,7 @@ export function I18nProvider({ children }) {
   const formatDate = useCallback(
     (iso) => {
       try {
-        return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-DZ' : 'fr-FR', {
+        return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-MA' : 'fr-FR', {
           dateStyle: 'medium',
           timeStyle: 'short',
         }).format(new Date(iso));

@@ -40,7 +40,7 @@ export default function Checkout() {
     const next = {};
     if (form.name.trim().length < 3) next.name = t('checkout.errName');
     const phone = form.phone.replace(/[\s-]/g, '');
-    if (!/^(?:\+213|0)[1-9]\d{8}$/.test(phone)) next.phone = t('checkout.errPhone');
+    if (!/^(?:\+212|0)[5-7]\d{8}$/.test(phone)) next.phone = t('checkout.errPhone');
     if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(form.email.trim())) {
       next.email = t('checkout.errEmail');
     }
