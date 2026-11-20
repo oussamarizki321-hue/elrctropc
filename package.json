@@ -1,0 +1,19 @@
+{
+  "name": "electropc",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ElectroPC - bilingual (Arabic/French) PC components store",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm --prefix client install --no-audit --no-fund && npm --prefix client run build",
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
