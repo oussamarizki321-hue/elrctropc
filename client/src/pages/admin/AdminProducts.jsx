@@ -12,7 +12,7 @@ const EMPTY = {
   price: '',
   oldPrice: '',
   stock: '',
-  image: '/img/cpu.svg',
+  image: '/img/products/cat-cpu.webp',
   sku: '',
   featured: false,
   descAr: '',
@@ -22,16 +22,16 @@ const EMPTY = {
 };
 
 const IMAGE_OPTIONS = [
-  '/img/laptop.svg',
-  '/img/gpu.svg',
-  '/img/cpu.svg',
-  '/img/ram.svg',
-  '/img/storage.svg',
-  '/img/monitor.svg',
-  '/img/keyboard.svg',
-  '/img/mouse.svg',
-  '/img/headset.svg',
-  '/img/psu.svg',
+  '/img/products/cat-laptop.webp',
+  '/img/products/cat-gpu.webp',
+  '/img/products/cat-cpu.webp',
+  '/img/products/cat-ram.webp',
+  '/img/products/cat-storage.webp',
+  '/img/products/cat-monitor.webp',
+  '/img/products/cat-keyboard.webp',
+  '/img/products/cat-mouse.webp',
+  '/img/products/cat-headset.webp',
+  '/img/products/cat-psu.webp',
 ];
 
 function toForm(product) {
@@ -43,7 +43,7 @@ function toForm(product) {
     price: String(product.price ?? ''),
     oldPrice: product.oldPrice ? String(product.oldPrice) : '',
     stock: String(product.stock ?? ''),
-    image: product.image || '/img/cpu.svg',
+    image: product.image || '/img/products/cat-cpu.webp',
     sku: product.sku || '',
     featured: Boolean(product.featured),
     descAr: product.desc?.ar || '',

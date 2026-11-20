@@ -450,7 +450,7 @@ test('SPA fallback serves index.html for client routes', async () => {
 });
 
 test('static assets are served', async () => {
-  const res = await fetch(`${BASE}/img/cpu.svg`);
+  const res = await fetch(`${BASE}/img/products/cat-cpu.webp`);
   assert.equal(res.status, 200);
   assert.match(res.headers.get('content-type') || '', /svg/);
 });
